@@ -1,8 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from '@redux-saga/core'
-// import rootSaga from './sagas/rootSaga'
+import newsListReducer from '@/components/news-list/reducers/news-list'
+import rootSaga from './sagas'
 
 const rootReducer = combineReducers({
+  newsList: newsListReducer
 })
 
 const sagaMiddleware = createSagaMiddleware()
@@ -18,7 +20,7 @@ const store = configureStore({
     }).concat(middlewares)
 })
 
-// sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga)
 
 export { store }
 
