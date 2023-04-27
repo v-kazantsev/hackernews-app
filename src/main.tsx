@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import App from './App.tsx'
-import { ErrorPage, NewsListPage } from '@/pages'
+import { ErrorPage, NewsListPage, NewsPage } from '@/pages'
 import { store } from '@/store/store'
 import './index.css'
 
@@ -16,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/news",
     element: <NewsListPage />
+  },
+  {
+    path: "/news/:id",
+    element: <NewsPage />
   }
 ]);
 
