@@ -1,4 +1,4 @@
 export const initialState = {
-    data: {},
+    data: [],
     isFetching: false
 };
