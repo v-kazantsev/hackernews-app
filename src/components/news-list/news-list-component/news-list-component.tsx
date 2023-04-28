@@ -10,8 +10,8 @@ export const NewsListComponent = () => {
   const { data: news, isFetching } = useSelector(newsListSelector);
 
   useEffect(() => {
-    dispatch(getNewsListRoutine())
-  }, [dispatch])
+    if (news.length === 0) dispatch(getNewsListRoutine())
+  }, [dispatch, news])
 
   return isFetching
   ?  <Box sx={{width: 300 }}>
