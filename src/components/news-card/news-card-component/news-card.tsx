@@ -16,7 +16,7 @@ export const NewsCardComponent = ({ news: { id, title, score, time, by, descenda
   }, [navigate, id]);
 
   return (
-    <Card variant='outlined' onClick={handleClick} title={title}>
+    <Card variant='outlined' onClick={handleClick} newsTitle={title}>
       {`${score} points by ${by} ${moment.unix(time).format('DD/MM/YYYY hh:mm')} | ${descendants} comments`}
     </Card>
   );
