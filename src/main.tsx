@@ -1,27 +1,12 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import App from './App.tsx'
-import { ErrorPage, NewsListPage, NewsPage } from '@/pages'
-import { store } from '@/store/store'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
+import { routes } from '@/config/routes';
 import './index.css'
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "/news",
-    element: <NewsListPage />
-  },
-  {
-    path: "/news/:id",
-    element: <NewsPage />
-  }
-]);
+const router = createBrowserRouter(routes);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

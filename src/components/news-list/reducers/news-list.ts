@@ -1,6 +1,6 @@
-import { getNewsListRoutine } from '@/components/news-list/actions/get-news-list-routine';
+import { getNewsListRoutine } from '@/components/news-list/actions/routines';
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
-import { initialState } from '@/components/news-list/state';
+import { initialState } from '@/components/news-list/state/state';
 
 const newsListReducer = createReducer<any>(initialState, {
   [getNewsListRoutine.REQUEST]: (state) => {

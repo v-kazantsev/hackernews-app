@@ -7,7 +7,7 @@ type Props = {
   news: IStory
 }
 
-export const NewsCard = ({ news: { id, title, score, time, by, descendants} }: Props) => {
+export const NewsCardComponent = ({ news: { id, title, score, time, by, descendants} }: Props) => {
   const navigate = useNavigate();
   return (
     <Card variant='outlined' onClick={() => navigate(`/news/${id}`)}>

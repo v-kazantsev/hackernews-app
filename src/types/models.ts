@@ -7,4 +7,6 @@ export interface IStory {
   title: string;
   type: string;
   url: string;
+  kids?: number[];
+  text?: string;
 }
