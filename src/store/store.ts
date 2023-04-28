@@ -1,10 +1,12 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import createSagaMiddleware from '@redux-saga/core'
-import newsListReducer from '@/components/news-list/reducers/news-list'
-import rootSaga from './sagas'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import createSagaMiddleware from '@redux-saga/core';
+import newsListReducer from '@/components/news-list/reducers/news-list';
+import commentsReducer from '@/components/comments/reducers/comments';
+import rootSaga from './sagas';
 
 const rootReducer = combineReducers({
-  newsList: newsListReducer
+  newsList: newsListReducer,
+  comments: commentsReducer
 })
 
 const sagaMiddleware = createSagaMiddleware()

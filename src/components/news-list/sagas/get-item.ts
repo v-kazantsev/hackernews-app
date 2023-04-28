@@ -7,7 +7,6 @@ import { IStory } from '@/types/models';
 function* getItemWorker(action: PayloadAction<{id: string | number}>) {
   const { request, success, failure, fulfill } = getItemRoutine;
   const id = action.payload
-  console.log('payload', action.payload)
 
   try {
     yield put(request());

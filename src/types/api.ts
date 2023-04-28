@@ -7,3 +7,7 @@ export interface INewsListAPI {
   getStory(id: number | string): Promise<AxiosResponse<IStory>>;
   
 }
+
+export interface ICommentsAPI {
+  getComments(is: number | string): Promise<AxiosResponse<IStory>>;
+}
