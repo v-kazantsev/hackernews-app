@@ -25,15 +25,15 @@ export const List = ({ listItems}: Props) => {
     dispatch(updateCommentsRoutine({ parent, ids }));
   }
   const dispatch = useDispatch();
-  const commentBlock = (comment: IComment) => {
-    const content = comment.text ? <span dangerouslySetInnerHTML={{__html: comment.text}} /> : ''
-    const secondaryAction = comment.kids && comment.kids.length > 0
-    ? (<IconButton aria-label="comment" onClick={() => handleClick(comment.id, comment.kids)}>
+  const commentBlock = ({ text, kids, id, deleted, nested }: IComment) => {
+    const content = text ? <span dangerouslySetInnerHTML={{__html: text}} /> : ''
+    const secondaryAction = kids && kids.length > 0
+    ? (<IconButton aria-label="comment" onClick={() => handleClick(id, kids)}>
         <CommentIcon />
         </IconButton>)
     : null
-    return comment.deleted ? null : (
-      <Fragment key={comment.id}>
+    return deleted ? null : (
+      <Fragment key={id}>
         <ListItem
           disableGutters
           secondaryAction={secondaryAction}
@@ -44,8 +44,8 @@ export const List = ({ listItems}: Props) => {
           </ListItemIcon>
           <ListItemText primary={content} />
         </ListItem>
-          {comment.kids && comment.kids.length > 0 && <Collapse in timeout="auto" unmountOnExit>
-          {comment.nested && <Box sx={{marginLeft: '30px'}}>{comment.nested?.map((item) => commentBlock(item))}</Box>}
+          {kids && kids.length > 0 && <Collapse in timeout="auto" unmountOnExit>
+          {nested && <Box sx={{marginLeft: '30px'}}>{nested?.map((item) => commentBlock(item))}</Box>}
         </Collapse>}
       </Fragment>
   )}
