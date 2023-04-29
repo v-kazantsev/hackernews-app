@@ -16,7 +16,7 @@ export const StoryComponent = () => {
   return (
     <Card variant='outlined' cardTitle={(<Link href={`${url}`} underline='none'>{title}</Link>)}>
       {`${score} points by ${by} ${formatUnixTime(time)} | ${descendants} comments`}
-      {id && kids && kids?.length > 0 && <CommentsComponent ids={kids} /> }
+      {id && kids && kids?.length > 0 && <CommentsComponent parent={+id} ids={kids} /> }
     </Card>
   );
 }

@@ -1,5 +1,5 @@
 import { ImmutableStateInvariantMiddlewareOptions, SerializableStateInvariantMiddlewareOptions } from '@reduxjs/toolkit';
-import { IStory, IComment } from './models';
+import { IStory } from './models';
 
 interface ThunkOptions<E = any> {
   extraArgument: E;
@@ -20,7 +20,7 @@ export interface INewsListState {
 
 export interface ICommentsState {
   comments: {
-    data: Array<IComment>,
+    data: { [key: number]: Array<IStory> },
     isFetching: boolean
   }
 }

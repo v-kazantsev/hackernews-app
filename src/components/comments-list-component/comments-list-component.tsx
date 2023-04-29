@@ -8,28 +8,31 @@ import {
   IconButton,
   ListItem,
   ListItemIcon,
-  Box
+  Box,
+  Button
 } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
-import FolderIcon from '@mui/icons-material/Folder';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import CachedIcon from '@mui/icons-material/Cached';
 import { updateCommentsRoutine } from '@/components/comments/actions/routines';
-import { IComment } from "@/types/models";
+import { IStory, IndexedStoriesArray } from "@/types/models";
 
 
 type Props = {
-  listItems?: Array<IComment>;
+  listItems?: IndexedStoriesArray;
+  parent: number;
 }
 
-export const List = ({ listItems}: Props) => {
+export const List = ({ parent, listItems}: Props) => {
   const handleClick = (parent: number, ids: number[] | undefined) => {
     dispatch(updateCommentsRoutine({ parent, ids }));
   }
   const dispatch = useDispatch();
-  const commentBlock = ({ text, kids, id, deleted, nested }: IComment) => {
+  const commentBlock = ({ text, kids, id, deleted }: IStory) => {
     const content = text ? <span dangerouslySetInnerHTML={{__html: text}} /> : ''
     const secondaryAction = kids && kids.length > 0
-    ? (<IconButton aria-label="comment" onClick={() => handleClick(id, kids)}>
-        <CommentIcon />
+    ? (<IconButton aria-label="comment" onClick={() => handleClick(+id, kids)}>
+        <AddCircleOutlineIcon />
         </IconButton>)
     : null
     return deleted ? null : (
@@ -40,27 +43,28 @@ export const List = ({ listItems}: Props) => {
           alignItems="flex-start"
         >
           <ListItemIcon>
-            <FolderIcon />
+            <CommentIcon />
           </ListItemIcon>
           <ListItemText primary={content} />
         </ListItem>
           {kids && kids.length > 0 && <Collapse in timeout="auto" unmountOnExit>
-          {nested && <Box sx={{marginLeft: '30px'}}>{nested?.map((item) => commentBlock(item))}</Box>}
+          {listItems?.[+id] && <Box sx={{marginLeft: '30px'}}>{listItems[+id]?.map((item) => commentBlock(item))}</Box>}
         </Collapse>}
       </Fragment>
   )}
   return (
     <MUIList
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-      component="nav"
+      sx={{ width: '100%', maxWidth: 500, bgcolor: 'background.paper' }}
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Comments
+          <Button variant="outlined" startIcon={<CachedIcon />}>
+            Reload comments
+          </Button>
         </ListSubheader>
       }
     >
-      {listItems?.map((listItem) => commentBlock(listItem))}
+      {listItems?.[parent]?.map((listItem) => commentBlock(listItem))}
     </MUIList>
   );
 }

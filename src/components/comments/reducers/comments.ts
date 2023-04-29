@@ -1,16 +1,16 @@
 import { getCommentsRoutine, updateCommentsRoutine } from '@/components/comments/actions/routines';
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { initialState } from '@/components/comments/state/state';
-import { IComment } from '@/types/models';
+import { IStory, IndexedStoriesArray } from '@/types/models';
 
-const commentsReducer = createReducer<any>(initialState, {
+const commentsReducer = createReducer<{data: IndexedStoriesArray, isFetching: boolean}>(initialState, {
   [getCommentsRoutine.REQUEST]:(state) => {
     state.isFetching = true;
     return state;
   },
-  [getCommentsRoutine.SUCCESS]: (state, action: PayloadAction<Array<IComment>>) => {
-    const comments = action.payload;
-    state.data = comments;
+  [getCommentsRoutine.SUCCESS]: (state, action: PayloadAction<{parent: number, comments: Array<IStory>}>) => {
+    const { parent, comments } = action.payload;
+    state.data = {[parent]: comments};
     return state;
   },
   [getCommentsRoutine.FAILURE]: (state) => {
@@ -24,14 +24,9 @@ const commentsReducer = createReducer<any>(initialState, {
     state.isFetching = true;
     return state;
   },
-  [updateCommentsRoutine.SUCCESS]: (state, action: PayloadAction<{parent: number, comments: Array<IComment>}>) => {
+  [updateCommentsRoutine.SUCCESS]: (state, action: PayloadAction<{parent: number, comments: Array<IStory>}>) => {
     const { parent, comments } = action.payload;
-    const index = state.data.findIndex((item: IComment) => item.id === parent);
-    if (index !== -1) {
-      const updatedComments = { ...state.data[index], nested: comments }
-      state.data[index] = updatedComments;
-    }
-    
+    state.data = { ...state.data, [parent]: comments}
     return state;
   },
   [updateCommentsRoutine.FAILURE]: (state) => {

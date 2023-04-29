@@ -1,24 +1,19 @@
 export interface IStory {
-  by: string;
-  descendants: number;
-  id: number;
-  score: number;
-  time: number;
-  title: string;
-  type: string;
-  url: string;
-  kids?: Array<number>;
+  id: number | string;
   deleted: boolean;
+  type: "job" | "story" | "comment" | "poll" | "pollopt";
+  time: number;
+  by: string;
+  text: string;
+  dead: boolean;
+  parent: number;
+  kids: Array<number>;
+  url: string;
+  score: number;
+  title: string;
+  descendants: number;
 }
 
-export interface IComment {
-  by: string;
-  id: number;
-  time: number;
-  text: string;
-  type: string;
-  parent: number;
-  kids?: Array<number>;
-  deleted: boolean;
-  nested?: Array<IComment>
+export type IndexedStoriesArray = {
+  [key: number]: Array<IStory> 
 }
