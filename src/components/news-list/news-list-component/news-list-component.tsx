@@ -4,6 +4,7 @@ import { Stack, Skeleton, Box } from '@mui/material';
 import { getNewsListRoutine } from '@/components/news-list/actions/routines';
 import { newsListSelector} from '@/components/news-list/selectors/news-list-selector'
 import { NewsCardComponent } from '@/components';
+import { REFRESH_INTERVAL } from '@/config/constants';
 
 export const NewsListComponent = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,12 @@ export const NewsListComponent = () => {
 
   useEffect(() => {
     if (news.length === 0) dispatch(getNewsListRoutine())
-  }, [dispatch, news])
+  }, [dispatch, news]);
+
+  useEffect(() => {
+    const timer = setInterval(() => dispatch(getNewsListRoutine()), REFRESH_INTERVAL);
+    return () => clearTimeout(timer);
+  }, []);
 
   return isFetching
   ?  <Box sx={{width: 300 }}>
