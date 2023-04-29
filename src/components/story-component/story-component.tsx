@@ -10,13 +10,13 @@ import { formatUnixTime } from '@/helpers/format-unix-time';
 export const StoryComponent = () => {
   const { id } = useParams();
   const story = useSelector(newsSelector(id));
-  if (!story) return <Navigate to='/news' />;
+  if (!story) return <Navigate to='/' />;
   const { title, score, by, time, descendants, kids, url } = story;
 
   return (
     <Card variant='outlined' cardTitle={(<Link href={`${url}`} underline='none'>{title}</Link>)}>
       {`${score} points by ${by} ${formatUnixTime(time)} | ${descendants} comments`}
-      {kids && kids?.length > 0 && <CommentsComponent ids={kids} /> }
+      {id && kids && kids?.length > 0 && <CommentsComponent parent={id} ids={kids} /> }
     </Card>
   );
 }

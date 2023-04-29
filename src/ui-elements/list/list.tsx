@@ -1,8 +1,8 @@
-import { useState, Fragment } from 'react';
+import { Fragment } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   ListSubheader,
   List as MUIList,
-  ListItemButton,
   ListItemText,
   Collapse,
   IconButton,
@@ -11,16 +11,43 @@ import {
 } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import FolderIcon from '@mui/icons-material/Folder';
-import { IComment } from '@/types/models';
+import { updateCommentsRoutine } from '@/components/comments/actions/routines';
+import { IComment } from "@/types/models";
+
 
 type Props = {
-  listTitle?: string;
   listItems?: Array<IComment>;
 }
 
-export const List = ({ listTitle, listItems = [] }: Props) => {
-  const [open, setOpen] = useState<number | undefined>(undefined);
-  console.log(listItems)
+export const List = ({ listItems}: Props) => {
+  const handleClick = (parent, ids) => {
+    dispatch(updateCommentsRoutine({ parent, ids }));
+  }
+  const dispatch = useDispatch();
+  const commentBlock = (comment: IComment) => {
+    const content = comment.text ? <span dangerouslySetInnerHTML={{__html: comment.text}} /> : ''
+    const secondaryAction = comment.kids && comment.kids.length > 0
+    ? (<IconButton aria-label="comment" onClick={() => handleClick(comment.id, comment.kids)}>
+        <CommentIcon />
+        </IconButton>)
+    : null
+    return comment.deleted ? null : (
+      <Fragment key={comment.id}>
+        <ListItem
+          disableGutters
+          secondaryAction={secondaryAction}
+          alignItems="flex-start"
+        >
+          <ListItemIcon>
+            <FolderIcon />
+          </ListItemIcon>
+          <ListItemText primary={content} />
+        </ListItem>
+          {comment.kids && comment.kids.length > 0 && <Collapse in timeout="auto" unmountOnExit>
+          {comment.nested && <div style={{marginLeft: '30px'}}>{comment.nested?.map((item) => commentBlock(item))}</div>}
+        </Collapse>}
+      </Fragment>
+  )}
   return (
     <MUIList
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
@@ -28,38 +55,12 @@ export const List = ({ listTitle, listItems = [] }: Props) => {
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          {listTitle}
+          comments
         </ListSubheader>
       }
     >
-      {listItems.map(({ text, kids, id}) => {
-        const content = text ? <span dangerouslySetInnerHTML={{__html: text}} /> : ''
-        const secondaryAction = kids && kids.length > 0
-        ? (<IconButton aria-label="comment" onClick={() => setOpen(id)}>
-            <CommentIcon />
-            </IconButton>)
-        : null
-        return (
-        <Fragment key={id}>
-          <ListItem
-            disableGutters
-            secondaryAction={secondaryAction}
-            alignItems="flex-start"
-          >
-            <ListItemIcon>
-              <FolderIcon />
-            </ListItemIcon>
-            <ListItemText primary={content} />
-          </ListItem>
-          {kids && kids.length > 0 && <Collapse in={open === id} timeout="auto" unmountOnExit>
-            <MUIList component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Starred" />
-              </ListItemButton>
-            </MUIList>
-          </Collapse>}
-        </Fragment>
-      )})}
+      {listItems?.map((listItem) => commentBlock(listItem))}
     </MUIList>
-  );
+  )
 }
+  

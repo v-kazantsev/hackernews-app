@@ -1,12 +1,14 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { CommentsAPI } from '@/api/comments/comments-api';
-import { getCommentsRoutine } from '@/components/comments/actions/routines';
+import { updateCommentsRoutine } from '@/components/comments/actions/routines';
 import { IComment } from '@/types/models';
 
-function* getCommentsWorker(action: PayloadAction<Array<number | string>>) {
-  const { request, success, failure, fulfill } = getCommentsRoutine;
-  const ids = action.payload;
+function* updateCommentsWorker(action: PayloadAction<{parent: number, ids: Array<number | string>}>) {
+  const { request, success, failure, fulfill } = updateCommentsRoutine;
+  const { parent, ids } = action.payload
+
+  console.log('parent', parent)
 
   try {
     yield put(request());
@@ -15,7 +17,8 @@ function* getCommentsWorker(action: PayloadAction<Array<number | string>>) {
       ids.map((id: string | number) => (CommentsAPI.getComments(id)))
     );
     const comments = list?.map(({ data }) => data);
-    yield put(success(comments));
+      
+      yield put(success({ parent, comments}));
 
   } catch (error) {
     console.error(error);
@@ -26,6 +29,6 @@ function* getCommentsWorker(action: PayloadAction<Array<number | string>>) {
   }
 }
 
-export function* getCommentsWatcher() {
-  yield takeLatest(getCommentsRoutine.trigger, getCommentsWorker);
+export function* updateCommentsWatcher() {
+  yield takeLatest(updateCommentsRoutine.trigger, updateCommentsWorker);
 }

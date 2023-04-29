@@ -8,6 +8,7 @@ export interface IStory {
   type: string;
   url: string;
   kids?: Array<number>;
+  deleted: boolean;
 }
 
 export interface IComment {
@@ -17,5 +18,6 @@ export interface IComment {
   text: string;
   type: string;
   parent: number;
-  kids?: Array<number>
+  kids?: Array<number>;
+  deleted: boolean;
 }

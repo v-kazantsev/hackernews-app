@@ -16,5 +16,7 @@ export const CommentsComponent = ({ ids }: Props) => {
   }, [ids, dispatch]);
 
   const comments: Array<IComment> = useSelector(commentsSelector);
-  return <List listTitle='Comments' listItems={comments} />;
+
+  console.log('COMMENTS', comments)
+  return <List listItems={comments} />;
 }
