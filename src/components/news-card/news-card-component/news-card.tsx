@@ -12,7 +12,7 @@ type Props = {
 export const NewsCardComponent = ({ news: { id, title, score, time, by, descendants} }: Props) => {
   const navigate = useNavigate();
   const handleClick = useCallback(() => {
-    navigate(`/news/${id}`)
+    navigate(`/${id}`)
   }, [navigate, id]);
 
   return (
