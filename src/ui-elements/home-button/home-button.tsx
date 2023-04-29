@@ -6,10 +6,10 @@ export const HomeButton = () => {
   const navigate = useNavigate();
   return (
     <Button
-    variant="outlined"
-    startIcon={<HomeIcon />}
-    onClick={() => navigate('/')}
-    sx={{color: 'white', marginLeft: 'auto'}}
+      variant="outlined"
+      startIcon={<HomeIcon />}
+      onClick={() => navigate('/')}
+      sx={{color: 'white', marginLeft: 'auto'}}
     >
       Home
     </Button>

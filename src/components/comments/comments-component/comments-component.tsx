@@ -14,9 +14,7 @@ export const CommentsComponent = ({ ids }: Props) => {
   useEffect(() => {
     dispatch(getCommentsRoutine(ids))
   }, [ids, dispatch]);
-
   const comments: Array<IComment> = useSelector(commentsSelector);
 
-  console.log('COMMENTS', comments)
   return <List listItems={comments} />;
 }

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { IStory } from './models';
+import { IStory, IComment } from './models';
 
 export interface INewsListAPI {
 
@@ -9,5 +9,5 @@ export interface INewsListAPI {
 }
 
 export interface ICommentsAPI {
-  getComments(is: number | string): Promise<AxiosResponse<IStory>>;
+  getComments(id: number | string): Promise<AxiosResponse<IComment>>;
 }

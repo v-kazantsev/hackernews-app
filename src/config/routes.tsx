@@ -8,6 +8,7 @@ export const routes = [
   },
   {
     path: "/:id",
-    element: <NewsPage />
+    element: <NewsPage />,
+    errorElement: <ErrorPage />
   }
 ]

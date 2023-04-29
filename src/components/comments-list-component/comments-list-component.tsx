@@ -7,7 +7,8 @@ import {
   Collapse,
   IconButton,
   ListItem,
-  ListItemIcon
+  ListItemIcon,
+  Box
 } from '@mui/material';
 import CommentIcon from '@mui/icons-material/Comment';
 import FolderIcon from '@mui/icons-material/Folder';
@@ -44,7 +45,7 @@ export const List = ({ listItems}: Props) => {
           <ListItemText primary={content} />
         </ListItem>
           {comment.kids && comment.kids.length > 0 && <Collapse in timeout="auto" unmountOnExit>
-          {comment.nested && <div style={{marginLeft: '30px'}}>{comment.nested?.map((item) => commentBlock(item))}</div>}
+          {comment.nested && <Box sx={{marginLeft: '30px'}}>{comment.nested?.map((item) => commentBlock(item))}</Box>}
         </Collapse>}
       </Fragment>
   )}
