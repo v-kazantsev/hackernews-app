@@ -20,4 +20,5 @@ export interface IComment {
   parent: number;
   kids?: Array<number>;
   deleted: boolean;
+  nested?: Array<IComment>
 }

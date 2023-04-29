@@ -9,9 +9,5 @@ export const routes = [
   {
     path: "/:id",
     element: <NewsPage />
-  },
-  {
-    path: "/news",
-    element: <ErrorPage />
   }
 ]

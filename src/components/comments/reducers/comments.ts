@@ -26,7 +26,7 @@ const commentsReducer = createReducer<any>(initialState, {
   },
   [updateCommentsRoutine.SUCCESS]: (state, action: PayloadAction<{parent: number, comments: Array<IComment>}>) => {
     const { parent, comments } = action.payload;
-    const index = state.data.findIndex((item) => item.id === parent);
+    const index = state.data.findIndex((item: IComment) => item.id === parent);
     if (index !== -1) {
       const updatedComments = { ...state.data[index], nested: comments }
       state.data[index] = updatedComments;

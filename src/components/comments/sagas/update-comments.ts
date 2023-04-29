@@ -6,9 +6,7 @@ import { IComment } from '@/types/models';
 
 function* updateCommentsWorker(action: PayloadAction<{parent: number, ids: Array<number | string>}>) {
   const { request, success, failure, fulfill } = updateCommentsRoutine;
-  const { parent, ids } = action.payload
-
-  console.log('parent', parent)
+  const { parent, ids } = action.payload;
 
   try {
     yield put(request());
