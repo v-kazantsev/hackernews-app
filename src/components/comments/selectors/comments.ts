@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
-import { INewsListState} from '@/types/redux';
+import { ICommentsState} from '@/types/redux';
 
 export const commentsSelector = createSelector(
-  (state: INewsListState) => state.comments,
+  (state: ICommentsState) => state.comments,
   ({ data }) => data
 );

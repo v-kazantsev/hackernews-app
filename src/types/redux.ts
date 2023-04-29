@@ -17,3 +17,10 @@ export interface INewsListState {
     isFetching: boolean
   }
 }
+
+export interface ICommentsState {
+  comments: {
+    data: Array<IStory>,
+    isFetching: boolean
+  }
+}

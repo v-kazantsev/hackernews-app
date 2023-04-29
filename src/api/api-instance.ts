@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { BASE_URL }from './constants';
+import { BASE_URL }from '@/config/constants';
 
 export const apiInstance = (config: Partial<AxiosRequestConfig> = {}): AxiosInstance => {
   const AxiosConfig: AxiosRequestConfig = {
@@ -18,10 +18,6 @@ export const apiInstance = (config: Partial<AxiosRequestConfig> = {}): AxiosInst
           console.error('Unauthorized')
         }
       }
-
-      // if (error.response && error.response.data && error.response.data.data && error.response.data.data.errors) {
-      //   return Promise.reject(error.response.data.data.errors);
-      // }
 
       return Promise.reject([error.message]);
     }
