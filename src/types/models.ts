@@ -8,5 +8,14 @@ export interface IStory {
   type: string;
   url: string;
   kids?: Array<number>;
-  text?: string;
+}
+
+export interface IComment {
+  by: string;
+  id: number;
+  time: number;
+  text: string;
+  type: string;
+  parent: number;
+  kids?: Array<number>
 }

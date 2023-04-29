@@ -2,7 +2,7 @@ import { put, takeLatest, all } from 'redux-saga/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { CommentsAPI } from '@/api/comments/comments-api';
 import { getCommentsRoutine } from '@/components/comments/actions/routines';
-import { IStory } from '@/types/models';
+import { IComment } from '@/types/models';
 
 function* getCommentsWorker(action: PayloadAction<Array<number | string>>) {
   const { request, success, failure, fulfill } = getCommentsRoutine;
@@ -11,7 +11,7 @@ function* getCommentsWorker(action: PayloadAction<Array<number | string>>) {
   try {
     yield put(request());
     
-    const list: Array<{data: Array<IStory>}> = yield all(
+    const list: Array<{data: Array<IComment>}> = yield all(
       ids.map((id: string | number) => (CommentsAPI.getComments(id)))
     );
     const comments = (list || []).map(({ data }) => data);
